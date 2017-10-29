@@ -67,29 +67,6 @@ class Controller:
             "one_time_keyboard": True
         }
 
-        '''
-        cities keyboard
-        '''
-        cities_keyboard = [
-            [{"text": Constants.KeyboardButtons.KEYBOARD_BACK}],
-            [{"text": "اصفهان"}, {"text": "مشهد"}, {"text": "تهران"}],
-            [{"text": "شیراز"}, {"text": "تبریز"}, {"text": "کرج"}],
-            [{"text": "کرمانشاه"}, {"text": "قم"}, {"text": "اهواز"}],
-            [{"text": "زاهدان"}, {"text": "رشت"}, {"text": "ارومیه"}],
-            [{"text": "همدان"}, {"text": "اراک"}, {"text": "کرمان"}],
-            [{"text": "بندرعباس"}, {"text": "اردبیل"}, {"text": "یزد"}],
-            [{"text": "سنندج"}, {"text": "قزوین"}, {"text": "زنجان"}],
-            [{"text": "ساری"}, {"text": "گرگان"}, {"text": "خرم آباد"}],
-            [{"text": "بیرجند"}, {"text": "بوشهر"}, {"text": "بجنورد"}],
-            [{"text": "سمنان"}, {"text": "شهرکرد"}, {"text": "ایلام"}],
-            [{"text": "یاسوج"}]
-        ]
-        final_cities_keyboard = {
-            "keyboard": cities_keyboard,
-            "resize_keyboard": True,
-            "one_time_keyboard": True
-        }
-
         while True:
             # sending the request to telegram for getting the updates!
             respond = TelegramInteractor.get_updates(self.__offset)
@@ -128,7 +105,7 @@ class Controller:
                     t = Thread(target=self.__model.add_user_in_database(user_id, u))
                     t.start()
 
-                    req_handler = RequestHandler(u, final_main_keyboard, final_cities_keyboard)
+                    req_handler = RequestHandler(u, final_main_keyboard)
                     self.__requests[user_id] = req_handler
                     req_handler.invoke()
 
