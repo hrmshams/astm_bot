@@ -1,4 +1,3 @@
-from .Translator import Translator
 from Controller.Constants import Constants
 from Model.FileImplementer import FileImplementer
 import json

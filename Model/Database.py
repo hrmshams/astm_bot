@@ -1,4 +1,4 @@
-import mysql.connector
+# import mysql.connector
 
 '''
 the model we'll use for this class methods would be like this :

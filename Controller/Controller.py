@@ -43,7 +43,7 @@ class Controller:
         self.__model = Model()
 
         """ configuring the database """
-        self.__model.configure_database(self.__database_info, db_connection)
+        # self.__model.configure_database(self.__database_info, db_connection)
 
     """
     note :
@@ -56,13 +56,13 @@ class Controller:
         '''
         main keyboard
         '''
-        main_keyboard = [
-            [{"text": Constants.KeyboardButtons.KEYBOARD_COIN_CURRENCY}, {"text": Constants.KeyboardButtons.KEYBOARD_TV_PLANS}],
-            [{"text": Constants.KeyboardButtons.KEYBOARD_TRANSLATE}, {"text": Constants.KeyboardButtons.KEYBOARD_WEATHER}],
-            [{"text": Constants.KeyboardButtons.KEYBOARD_HELP}]
-        ]
+        # main_keyboard = [
+        #     [{"text": Constants.KeyboardButtons.KEYBOARD_COIN_CURRENCY}, {"text": Constants.KeyboardButtons.KEYBOARD_TV_PLANS}],
+        #     [{"text": Constants.KeyboardButtons.KEYBOARD_TRANSLATE}, {"text": Constants.KeyboardButtons.KEYBOARD_WEATHER}],
+        #     [{"text": Constants.KeyboardButtons.KEYBOARD_HELP}]
+        # ]
         final_main_keyboard = {
-            "keyboard": main_keyboard,
+            # "keyboard": main_keyboard,
             "resize_keyboard": True,
             "one_time_keyboard": True
         }
@@ -84,7 +84,7 @@ class Controller:
             # implementing the req_handler for all updates!
             for u in updates:
                 # checking if request exists in the collection!
-
+                print("aces")
                 '''
                 there is two ways :
                 1) the thread related to user request handler exists in the collection so we handle the request!
@@ -102,8 +102,8 @@ class Controller:
 
                 else:
                     # adding the request to the collection!
-                    t = Thread(target=self.__model.add_user_in_database(user_id, u))
-                    t.start()
+                    # t = Thread(target=self.__model.add_user_in_database(user_id, u))
+                    # t.start()
 
                     req_handler = RequestHandler(u, final_main_keyboard)
                     self.__requests[user_id] = req_handler

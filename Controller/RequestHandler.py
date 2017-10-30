@@ -1,10 +1,7 @@
 from threading import Thread
-from Model.Model import Model
-from Model.Texts import Texts
-from Model.TvPlans import TvPlans
 from .Constants import Constants
 from .TelegramInteracotor import TelegramInteractor
-
+from Model.FileSearcher import FileSearcher
 
 class RequestHandler:
     # user info
@@ -84,34 +81,11 @@ class RequestHandler:
 
         if self.__type == Constants.MESSAGE_TYPE_BOT_COMMAND:
             if self.__text == Constants.Commands.COMMAND_START:
-                TelegramInteractor.send_message(self.__chat_id, Texts.START_TEXT, self.__main_keyboard)
+                TelegramInteractor.send_message(self.__chat_id, Constants.START_TEXT)
 
-            elif self.__text == Constants.Commands.COMMAND_SHOW_KEYBOARD:
-                pass # TODO
+            elif self.__text == Constants.Commands.COMMAND_FETCH_FILE:
+                self.__state = Constants.States.SENDING_FILE_NAME
+                TelegramInteractor.send_message(self.__chat_id, Constants.SEND_FILE_NAME)
 
         else:
-            if self.__text == Constants.KeyboardButtons.KEYBOARD_BACK:
-                self.__state = Constants.States.NORMAL
-                TelegramInteractor.send_message(self.__chat_id, Texts.BACK_TEXT, self.__main_keyboard)
-
-            elif self.__state == Constants.States.NORMAL:
-                print("access to normal state")
-
-                if self.__text == Constants.KeyboardButtons.KEYBOARD_TV_PLANS:
-                    print("access to tvplan 1")
-                    self.ans_tv_plan(1)
-                else:
-                    self.ans_ordinary_req()
-
-            elif self.__state == Constants.States.TV_PLAN_CHANNEL_ENTERING:
-                print("access to tvplan2")
-                self.ans_tv_plan(2)
-
-            else:
-                print("something wrong happened!")
-
-        print("request answered to : ", self.__first_name)
-
-
-    def ans_ordinary_req(self):
-        TelegramInteractor.send_message(self.__chat_id, "منظوری دریافت نشد!", None)
+            FileSearcher.search_file(chat_id=self.__chat_id, file_name=self.__text)

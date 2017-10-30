@@ -1,0 +1,6 @@
+os : 3
+meybodi : 1?
+rizmo : 1
+it : (3)
+sabziro : 1? + (2)
+andishe2 : 1

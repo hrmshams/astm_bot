@@ -1,5 +1,7 @@
-import requests,json
+import json
+import requests
 from .Constants import Constants
+
 
 # be aware you should use this class methods as static!
 # don't make any instances from this class!
@@ -9,6 +11,7 @@ class TelegramInteractor:
     send_message_meth = "sendMessage"
     send_voice_meth = "sendVoice"
     get_updates_meth = "getUpdates"
+    send_document_meth = "sendDocument"
 
     # #
     token = Constants.BotInfo.BOT_TOKEN  # ranggo!
@@ -18,7 +21,7 @@ class TelegramInteractor:
         pass
 
     @staticmethod
-    def send_message(chat_id, text, reply_markup):
+    def send_message(chat_id, text, reply_markup=None):
         params = {
             "chat_id": chat_id,
             "text": text,
@@ -61,8 +64,35 @@ class TelegramInteractor:
         return result
 
     @staticmethod
-    def send_req_to_telegram_server(req_method, params):
+    def send_file(chat_id, file_address):
+
+        try:
+            file = open(file_address, 'rb')
+        except:
+            return -1
+
+        params = {
+            'chat_id': chat_id,
+        }
+        files = {
+            'document': file
+        }
+
+        r = TelegramInteractor.send_req_to_telegram_server(TelegramInteractor.send_document_meth,
+                                                           params=params, files=files)
+        return r
+
+    @staticmethod
+    def send_req_to_telegram_server(req_method, params, files=None):
         url = TelegramInteractor.telegram + TelegramInteractor.token + "/" + req_method
-        r = requests.post(url, params)
+
+        if files is None:
+            r = requests.post(url, params)
+        else:
+            r = requests.post(url, params , files= files)
 
         return r
+
+    @staticmethod
+    def send_http_req():
+        pass
